@@ -1,7 +1,34 @@
-$list_to_sort: john anna zoe kim felicia carrie;
-$list_sorted: sort($list_to_sort);
-@debug $list_sorted;
+@function sort-list($list) {
+    $length: length($list);
+    @if $length <= 1 {
+    @return $list;
+    }
 
-$list_to_sort_2: bob anna sylvain john ludo colin patrick;
-$list_sorted_2: sort($list_to_sort_2);
-@debug $list_sorted_2;
+    
+    $sorted-list: $list;
+    $is-sorted: false;
+
+    @while not $is-sorted {
+    $is-sorted: true;
+    @for $i from 1 through ($length - 1) {
+        $current: nth($sorted-list, $i);
+        $next: nth($sorted-list, $i + 1);
+        @if $current > $next {
+        
+        $sorted-list: set-nth($sorted-list, $i, $next);
+        $sorted-list: set-nth($sorted-list, $i + 1, $current);
+        $is-sorted: false;
+        }
+    }
+    }
+    @return $sorted-list;
+}
+
+
+$list_to_sort: (5, 3, 8, 1, 4);
+
+
+$sorted_list: sort-list($list_to_sort);
+
+
+@debug $sorted_list;
