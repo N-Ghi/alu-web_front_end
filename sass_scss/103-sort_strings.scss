@@ -1,11 +1,23 @@
-$list_to_sort: john anna zoe kim felicia carrie;
+// Function to sort a list
+@function sort-list($list) {
+    $sorted-list: (); 
 
-$list_sorted: sort($list_to_sort);
+    @while length($list) > 0 {
+    $min: nth($list, 1); 
+    @each $item in $list {
+        @if $item < $min {
+        $min: $item;
+        }
+    }
+    $sorted-list: append($sorted-list, $min);
+    $list: remove($list, index($list, $min));
+    }
+
+    @return $sorted-list;
+}
+
+$list_to_sort: john, anna, zoe, kim, felicia, carrie;
+
+$list_sorted: sort-list($list_to_sort);
 
 @debug $list_sorted;
-
-$list_to_sort_2: bob anna sylvain john ludo colin patrick;
-
-$list_sorted_2: sort($list_to_sort_2);
-
-@debug $list_sorted_2;
